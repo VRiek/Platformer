@@ -6,19 +6,21 @@ public class Logic : MonoBehaviour
 {
     public GameObject gameOverScreen;
     public GameObject victoryScreen;
+    public GameObject player;
+    public GameObject victoryCoin;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void Update()
     {
-        
+        spawnVictoryCoin();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void spawnVictoryCoin()
     {
-        
+        if (player.GetComponent<Player>().coinsCollected == 6)
+        {
+            victoryCoin.SetActive(true);
+        }
     }
-
     public void gameOver()
     {
         gameOverScreen.SetActive(true);
@@ -32,5 +34,13 @@ public class Logic : MonoBehaviour
     public void victory()
     {
         victoryScreen.SetActive(true); 
+    }
+
+    public void exitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+        Application.Quit();
     }
 }

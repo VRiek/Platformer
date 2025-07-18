@@ -1,5 +1,5 @@
 using System;
-using Unity.VisualScripting.Dependencies.NCalc;
+using TMPro;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -13,12 +13,16 @@ public class Player : MonoBehaviour
     //private int superJumpsRemaining;
     //private bool playerIsAlive = true;
     public Logic logic;
+    public int coinsCollected = 0;
+    public TextMeshProUGUI coinsText;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rigidbodyComponent = GetComponent<Rigidbody>();
         logic = GameObject.FindGameObjectWithTag("Logic").GetComponent<Logic>();
+        setCoinsText();
     }
 
     // Update is called once per frame
@@ -62,6 +66,8 @@ public class Player : MonoBehaviour
         if (other.gameObject.layer == 3)
         {
             Destroy(other.gameObject);
+            coinsCollected++;
+            setCoinsText();
             //superJumpsRemaining++;
         }
         else if (other.gameObject.layer == 7)
@@ -78,5 +84,10 @@ public class Player : MonoBehaviour
             //playerIsAlive = false;
             logic.gameOver();
         }
+    }
+
+    private void setCoinsText()
+    {
+        coinsText.text = $"Coins: {coinsCollected}/6";
     }
 }
